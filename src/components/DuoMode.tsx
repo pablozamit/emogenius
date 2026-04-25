@@ -408,13 +408,11 @@ export default function DuoMode({ user, onBack, challenges: allChallenges }: Duo
                   value={guessInput}
                   onChange={(e) => setGuessInput(e.target.value)}
                   placeholder={
-                    room.targetCategory?.toLowerCase().includes('película') ? '¿Qué película es?' :
-                    room.targetCategory?.toLowerCase().includes('refrán') ? '¿Qué refrán es?' :
-                    room.targetCategory?.toLowerCase().includes('personaje') ? '¿Qué personaje es?' :
-                    room.targetCategory?.toLowerCase().includes('ciudad') ? '¿Qué ciudad es?' :
-                    room.targetCategory?.toLowerCase().includes('país') ? '¿Qué país es?' :
-                    room.targetCategory?.toLowerCase().includes('canción') ? '¿Qué canción es?' :
-                    '¿Qué es?'
+                    room.targetSubcategory 
+                      ? (['atleta', 'personaje'].includes(room.targetSubcategory.toLowerCase()) ? '¿Quién es?' : `¿Qué ${room.targetSubcategory.toLowerCase()} es?`)
+                      : (['deportes', 'personajes'].includes(room.targetCategory?.toLowerCase() || '') ? '¿Quién es?' : 
+                         room.targetCategory?.toLowerCase() === 'palabra aleatoria' ? '¿Qué palabra es?' :
+                         `¿Qué ${room.targetCategory?.toLowerCase() || ''} es?`)
                   }
                   className="flex-1 bg-[#F3F3F3] border-4 border-[#2D2D2D] rounded-2xl px-8 py-5 text-xl outline-none focus:bg-white transition-all font-black placeholder:text-slate-300 font-emoji"
                 />

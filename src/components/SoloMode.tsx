@@ -456,13 +456,11 @@ export default function SoloMode({ onBack, challenges: allChallenges }: SoloMode
             onChange={(e) => setUserInput(e.target.value)}
             disabled={gameState !== 'playing'}
             placeholder={
-              currentChallenge?.category.toLowerCase().includes('película') ? '¿Qué película es?' :
-              currentChallenge?.category.toLowerCase().includes('refrán') ? '¿Qué refrán es?' :
-              currentChallenge?.category.toLowerCase().includes('personaje') ? '¿Qué personaje es?' :
-              currentChallenge?.category.toLowerCase().includes('ciudad') ? '¿Qué ciudad es?' :
-              currentChallenge?.category.toLowerCase().includes('país') ? '¿Qué país es?' :
-              currentChallenge?.category.toLowerCase().includes('canción') ? '¿Qué canción es?' :
-              '¿Qué es?'
+              currentChallenge?.subcategory 
+                ? (['atleta', 'personaje'].includes(currentChallenge.subcategory.toLowerCase()) ? '¿Quién es?' : `¿Qué ${currentChallenge.subcategory.toLowerCase()} es?`)
+                : (['deportes', 'personajes'].includes(currentChallenge.category.toLowerCase()) ? '¿Quién es?' : 
+                   currentChallenge.category.toLowerCase() === 'palabra aleatoria' ? '¿Qué palabra es?' :
+                   `¿Qué ${currentChallenge.category.toLowerCase()} es?`)
             }
             className="flex-1 bg-white border-4 border-[#2D2D2D] rounded-2xl px-8 py-5 text-xl font-black placeholder:text-slate-300 focus:bg-[#FFFCF0] outline-none transition-all shadow-[6px_6px_0px_0px_#2D2D2D] disabled:opacity-50 font-emoji"
           />
