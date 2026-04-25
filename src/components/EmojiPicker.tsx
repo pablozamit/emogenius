@@ -30,8 +30,8 @@ export default function EmojiPicker({ onSelect, onClose }: EmojiPickerProps) {
     : currentEmojis;
 
   return (
-    <div className="bg-white border-4 border-[#2D2D2D] rounded-3xl shadow-[8px_8px_0px_0px_#2D2D2D] w-full max-w-sm overflow-hidden flex flex-col h-[400px]">
-      <div className="p-4 border-b-4 border-[#2D2D2D] bg-[#F3F3F3] flex items-center gap-2">
+    <div className="bg-transparent w-full h-full overflow-hidden flex flex-col">
+      <div className="p-2 bg-black/20 flex items-center gap-2">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input 
@@ -63,7 +63,7 @@ export default function EmojiPicker({ onSelect, onClose }: EmojiPickerProps) {
         </div>
       </div>
 
-      <div className="p-2 border-t-4 border-[#2D2D2D] bg-[#F3F3F3] flex justify-between gap-1 overflow-x-auto">
+      <div className="p-2 bg-black/40 flex justify-between gap-1 overflow-x-auto">
         {CATEGORIES.map(cat => (
           <button
             key={cat.id}
@@ -72,8 +72,8 @@ export default function EmojiPicker({ onSelect, onClose }: EmojiPickerProps) {
               setSearch('');
             }}
             className={cn(
-              "p-3 rounded-xl transition-all",
-              activeCategory === cat.id ? "bg-[#FFCD4B] border-2 border-[#2D2D2D]" : "hover:bg-slate-200"
+              "p-2 rounded-xl transition-all",
+              activeCategory === cat.id ? "bg-yellow-400 text-black shadow-lg shadow-yellow-400/20" : "text-white/40 hover:bg-white/10"
             )}
           >
             {cat.icon}

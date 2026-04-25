@@ -6,12 +6,13 @@ import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { collection, getDocs, doc, writeBatch, query, limit } from 'firebase/firestore';
 import SoloMode from './components/SoloMode';
 import DuoMode from './components/DuoMode';
-import TrainingMode from './components/TrainingMode';
+import Battle2v2 from './components/Battle2v2/Battle2v2';
 import { cn } from './lib/utils';
 import { INITIAL_CHALLENGES } from './constants/challenges';
 import { Challenge } from './types';
+import { Swords } from 'lucide-react';
 
-type GameMode = 'menu' | 'solo' | 'duo' | 'about';
+type GameMode = 'menu' | 'solo' | 'duo' | 'training' | 'battle' | 'about';
 
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -173,13 +174,16 @@ export default function App() {
                   shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
                   onClick={() => setMode('solo')}
                 />
-                <MenuButton 
-                  icon={<Users className="w-10 h-10" />}
-                  title="DUELO DUO"
-                  description="Adivina en pareja"
-                  color="bg-[#00D1FF]"
-                  shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
                   onClick={() => user ? setMode('duo') : handleLogin()}
+                />
+                <MenuButton 
+                  icon={<Swords className="w-10 h-10" />}
+                  title="BATALLA 2V2"
+                  description="La Joya de la Corona"
+                  color="bg-[#FF4B91]"
+                  textColor="text-white"
+                  shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
+                  onClick={() => user ? setMode('battle') : handleLogin()}
                 />
               </div>
 
@@ -230,6 +234,21 @@ export default function App() {
             </motion.div>
           )}
 
+          {mode === 'battle' && (
+            <motion.div key="battle" className="flex-1 flex flex-col">
+              {/* Botón de volver adaptado para la batalla */}
+              <div className="flex justify-between items-center mb-4">
+                <button 
+                  onClick={() => setMode('menu')}
+                  className="bg-white border-2 border-[#2D2D2D] px-4 py-2 rounded-xl font-bold hover:bg-slate-50 transition-colors flex items-center gap-2"
+                >
+                  SALIR DE LA ARENA
+                </button>
+              </div>
+              <Battle2v2 />
+            </motion.div>
+          )}
+
           {mode === 'about' && (
             <motion.div
               key="about"
@@ -269,28 +288,23 @@ export default function App() {
   );
 }
 
-function MenuButton({ icon, title, description, color, shadow, onClick }: any) {
+function MenuButton({ icon, title, description, color, shadow, onClick, textColor = "text-[#2D2D2D]" }: any) {
   return (
     <motion.button
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={cn(
-        "relative overflow-hidden group p-8 rounded-[32px] flex flex-col items-start gap-6 border-4 border-[#2D2D2D] transition-transform",
+        "relative p-8 rounded-[40px] text-left border-4 border-[#2D2D2D] transition-all group",
         color,
         shadow
       )}
     >
-      <div className="p-4 bg-white border-4 border-[#2D2D2D] rounded-2xl shadow-[4px_4px_0px_0px_#2D2D2D]">
+      <div className={cn("mb-6 bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform", textColor)}>
         {icon}
       </div>
-      <div className="text-left">
-        <h3 className="text-2xl font-black text-[#2D2D2D] uppercase tracking-tighter leading-none mb-1">{title}</h3>
-        <p className="font-bold opacity-70 text-sm uppercase tracking-wide">{description}</p>
-      </div>
-      <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-        <Play className="w-16 h-16 fill-current" />
-      </div>
+      <h3 className={cn("text-3xl font-black mb-1 uppercase tracking-tighter italic", textColor)}>{title}</h3>
+      <p className={cn("text-sm font-bold opacity-70 uppercase tracking-widest", textColor)}>{description}</p>
     </motion.button>
   );
 }

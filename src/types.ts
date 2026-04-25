@@ -69,3 +69,41 @@ export interface UserProfile {
   photoURL?: string;
   soloHighscore: number;
 }
+
+// --- BATTLE 2V2 TYPES ---
+
+export interface BattlePlayer {
+  uid: string;
+  name: string;
+  photoURL?: string;
+  ready: boolean;
+  team?: number;
+}
+
+export interface BattleTeam {
+  uids: string[];
+  emojiBank: number;
+  usedEmojis: number;
+  totalTime: number;
+  score: number;
+}
+
+export interface BattleGame {
+  id: string;
+  status: 'lobby' | 'playing' | 'finished';
+  createdAt: any;
+  players: Record<string, BattlePlayer>;
+  teams: [BattleTeam, BattleTeam];
+  gameState: {
+    round: number;
+    currentTeam: number;
+    drawerId: string;
+    guesserId: string;
+    challenge: { phrase: string; category: string };
+    turnStartTime: any;
+    currentEmojis: string;
+    lastGuess: string;
+    blockedEmoji: string | null;
+  };
+  winnerTeam?: number;
+}
