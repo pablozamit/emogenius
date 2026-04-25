@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "Challenge": {
+      "title": "Challenge",
+      "description": "A pre-defined or generated emoji riddle.",
+      "type": "object",
+      "properties": {
+        "emoji": { "type": "string", "description": "The emoji sequence." },
+        "phrase": { "type": "string", "description": "The target answer." },
+        "category": { "type": "string", "description": "e.g., Arte, Geografía." },
+        "subcategory": { "type": "string", "description": "e.g., Cine, Pintura." },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "totalAttempts": { "type": "number" },
+        "totalSuccesses": { "type": "number" }
+      },
+      "required": ["emoji", "phrase"]
+    },
+    "ResponseLog": {
+      "title": "ResponseLog",
+      "description": "A log of a guess attempt.",
+      "type": "object",
+      "properties": {
+        "challengePhrase": { "type": "string" },
+        "userInput": { "type": "string" },
+        "isCorrect": { "type": "boolean" },
+        "similarity": { "type": "number" },
+        "score": { "type": "number" },
+        "mode": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      }
+    },
+    "Dispute": {
+      "title": "Dispute",
+      "description": "A message from a user who disagrees with a score.",
+      "type": "object",
+      "properties": {
+        "challengePhrase": { "type": "string" },
+        "userInput": { "type": "string" },
+        "score": { "type": "number" },
+        "reason": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "LobbyPlayer": {
+      "title": "LobbyPlayer",
+      "description": "A player waiting for a duo match.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "joinedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "joinedAt"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "An active duo game room.",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["waiting", "playing", "finished"] },
+        "players": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "guesserId": { "type": "string", "description": "ID of the player who guesses." },
+        "describerId": { "type": "string", "description": "ID of the player who uses emojis." },
+        "targetPhrase": { "type": "string" },
+        "currentEmojis": { "type": "string" },
+        "score": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastGuess": { "type": "string" },
+        "lastGuessCorrect": { "type": "boolean" }
+      },
+      "required": ["status", "players", "createdAt"]
+    }
+  },
+  "firestore": {
+    "challenges/{challengeId}": {
+      "schema": "Challenge",
+      "description": "Collection of emoji challenges for Solo mode."
+    },
+    "lobby/{userId}": {
+      "schema": "LobbyPlayer",
+      "description": "Waiting room for Duo mode."
+    },
+    "rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Active Duo game sessions."
+    },
+    "training_votes/{voteId}": {
+      "schema": "TrainingVote",
+      "description": "User votes on A/B training tasks."
+    },
+    "disputes/{disputeId}": {
+      "schema": "Dispute",
+      "description": "User disputes regarding similarity scores."
+    }
+  }
+}

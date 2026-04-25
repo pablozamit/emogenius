@@ -1,0 +1,108 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Challenges ---
+    match /challenges/{challengeId} {
+      allow read: if true;
+      allow create: if true; // Seedable by first user
+      allow update: if isSignedIn(); 
+    }
+
+    // --- Responses ---
+    function isValidResponse(data) {
+      return data.keys().hasAll(['challengePhrase', 'userInput', 'isCorrect', 'similarity', 'mode', 'timestamp']) &&
+             data.timestamp == request.time;
+    }
+
+    match /responses/{responseId} {
+      allow create: if isSignedIn() && isValidResponse(incoming());
+      allow read: if false; // Only admin via console should read
+    }
+
+    // --- Training Votes ---
+    function isValidTrainingVote(data) {
+      return data.keys().hasAll(['phrase', 'category', 'optionA', 'optionB', 'selected', 'timestamp']) &&
+             data.timestamp == request.time;
+    }
+
+    match /training_votes/{voteId} {
+      allow create: if isSignedIn() && isValidTrainingVote(incoming());
+    }
+
+    // --- Disputes ---
+    function isValidDispute(data) {
+      return data.keys().hasAll(['challengePhrase', 'userInput', 'score', 'reason', 'timestamp']) &&
+             data.reason is string && data.reason.size() <= 500 &&
+             data.timestamp == request.time;
+    }
+
+    match /disputes/{disputeId} {
+      allow create: if isSignedIn() && isValidDispute(incoming());
+    }
+
+    // --- Lobby ---
+    function isValidLobbyPlayer(data) {
+      return data.keys().hasAll(['uid', 'name', 'joinedAt']) &&
+             data.keys().size() == 3 &&
+             data.uid == request.auth.uid &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 50 &&
+             data.joinedAt == request.time;
+    }
+
+    match /lobby/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId) && isValidLobbyPlayer(incoming());
+      allow delete: if isOwner(userId);
+    }
+
+    // --- Rooms ---
+    function isPlayerInRoom(room) {
+      return isSignedIn() && request.auth.uid in room.players;
+    }
+
+    function isValidRoom(data) {
+      return data.players is list && data.players.size() > 0 && data.players.size() <= 2 &&
+             data.status in ['waiting', 'playing', 'finished'] &&
+             data.createdAt is timestamp;
+    }
+
+    match /rooms/{roomId} {
+      allow read: if isPlayerInRoom(existing());
+      allow create: if isSignedIn() && isValidRoom(incoming()) && incoming().createdAt == request.time;
+      
+      allow update: if isPlayerInRoom(existing()) && (
+        // Action: Join (moving from waiting to playing)
+        (incoming().diff(existing()).affectedKeys().hasOnly(['players', 'status', 'describerId', 'guesserId', 'targetPhrase', 'score'])) ||
+        // Action: Game play (updating emojis or guessing)
+        (incoming().diff(existing()).affectedKeys().hasOnly(['currentEmojis', 'lastGuess', 'lastGuessCorrect', 'score', 'targetPhrase', 'status']))
+      );
+      
+      allow delete: if false; // Don't allow deletion via client for now
+    }
+  }
+}
