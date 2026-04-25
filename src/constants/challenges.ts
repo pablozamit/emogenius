@@ -116,13 +116,29 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🥟🇵🇱", phrase: "Pierogi", category: "Gastronomía" },
   { emoji: "🥣🍳", phrase: "Bibimbap", category: "Gastronomía" },
 
-  // CONCEPTOS CREATIVOS
-  { emoji: "✏️🔵", phrase: "Lapislázuli", category: "Palabra Aleatoria" },
-  { emoji: "🐱🦶", phrase: "Pies de gato", category: "Palabra Aleatoria" },
-  { emoji: "🧦🌙", phrase: "Media luna", category: "Palabra Aleatoria" },
-  { emoji: "🐅⚖️", phrase: "Trabalenguas", category: "Palabra Aleatoria" },
-  { emoji: "🧠⚡", phrase: "Lluvia de ideas", category: "Palabra Aleatoria" },
-  { emoji: "🦷🧚‍♀️", phrase: "Hada de los dientes", category: "Palabra Aleatoria" },
-  { emoji: "🦶📸", phrase: "Fotocopia", category: "Palabra Aleatoria" },
-  { emoji: "👂🐚", phrase: "Oír el mar", category: "Palabra Aleatoria" }
+  // PALABRA ALEATORIA (Conceptos abstractos y de ingenio)
+  { emoji: "⏪🥺", phrase: "Nostalgia", category: "Palabra Aleatoria" },
+  { emoji: "🤫🔒", phrase: "Secreto", category: "Palabra Aleatoria" },
+  { emoji: "🕵️‍♂️🔍", phrase: "Misterio", category: "Palabra Aleatoria" },
+  { emoji: "🛤️🔮", phrase: "Destino", category: "Palabra Aleatoria" },
+  { emoji: "🏜️💧❓", phrase: "Espejismo", category: "Palabra Aleatoria" },
+  { emoji: "☀️🌑", phrase: "Eclipse", category: "Palabra Aleatoria" },
+  { emoji: "🍎⬇️", phrase: "Gravedad", category: "Palabra Aleatoria" },
+  { emoji: "🗣️👂", phrase: "Rumor", category: "Palabra Aleatoria" },
+  { emoji: "🌇🦇", phrase: "Crepúsculo", category: "Palabra Aleatoria" },
+  { emoji: "🔇🤫", phrase: "Silencio", category: "Palabra Aleatoria" },
+  { emoji: "🔄🤯", phrase: "Paradoja", category: "Palabra Aleatoria" },
+  { emoji: "☁️👼", phrase: "Paraíso", category: "Palabra Aleatoria" },
+  { emoji: "💓🩺", phrase: "Latido", category: "Palabra Aleatoria" },
+  { emoji: "🌧️🏠", phrase: "Refugio", category: "Palabra Aleatoria" },
+  { emoji: "🏜️🐪", phrase: "Desierto", category: "Palabra Aleatoria" },
+  { emoji: "👁️👁️", phrase: "Mirada", category: "Palabra Aleatoria" },
+  { emoji: "🎁😲", phrase: "Sorpresa", category: "Palabra Aleatoria" },
+  { emoji: "😈👦", phrase: "Travesura", category: "Palabra Aleatoria" },
+  { emoji: "🎩✨", phrase: "Ilusión", category: "Palabra Aleatoria" },
+  { emoji: "🪞👤", phrase: "Espejo", category: "Palabra Aleatoria" },
+  { emoji: "🙈🌳", phrase: "Escondite", category: "Palabra Aleatoria" },
+  { emoji: "⚔️🛡️", phrase: "Desafío", category: "Palabra Aleatoria" },
+  { emoji: "👁️⬇️⬆️", phrase: "Parpadeo", category: "Palabra Aleatoria" },
+  { emoji: "📸✨", phrase: "Destello", category: "Palabra Aleatoria" }
 ];
