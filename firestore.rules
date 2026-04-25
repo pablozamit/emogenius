@@ -1,40 +1,36 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper functions
     function isSignedIn() {
       return request.auth != null;
     }
-    
-    // --- Challenges ---
+
     match /challenges/{challengeId} {
       allow read: if true;
-      allow create: if true; 
-      allow update: if isSignedIn(); 
+      allow write: if isSignedIn();
     }
-    
-    // --- Duo Games ---
-    match /games/{gameId} {
-      allow read: if isSignedIn();
-      allow create: if isSignedIn();
-      allow update: if isSignedIn() && (
-        resource.data.player1.id == request.auth.uid || 
-        resource.data.player2.id == request.auth.uid ||
-        resource.data.player2.id == null
-      );
-      allow delete: if false;
+
+    match /rooms/{roomId} {
+      allow read, write: if isSignedIn();
     }
-    
-    // --- Training Mode (LABORATORIO) ---
-    match /training/{recordId} {
+
+    match /battles/{battleId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /responses/{responseId} {
       allow create: if isSignedIn();
       allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
     }
 
-    // --- Users/Profiles ---
     match /users/{userId} {
       allow read: if true;
       allow write: if isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
