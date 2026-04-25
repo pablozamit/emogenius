@@ -1,0 +1,50 @@
+# EmoGenius - AI Agent Operational Manual
+
+This file contains the definitive technical and operational instructions for any AI Agent working on EmoGenius.
+
+## 1. App Explanation
+EmoGenius is a web-based competitive guessing game where concepts are represented exclusively by emojis.
+- **Goal:** Players must guess the phrase/word associated with a set of emojis.
+- **Modes:** 
+  - Solo: Single player against the computer.
+  - Duo: Local/Network competitive play.
+  - Training: Casual practice.
+- **Core Loop:** The app fetches challenges from Firestore. If it's the first run or `?clean=true` is used, it seeds the database from `src/constants/challenges.ts`.
+
+## 2. Technical Stack & Structure
+- **Frontend:** React + Vite + TypeScript.
+- **Styling:** Tailwind CSS + Framer Motion (motion/react).
+- **Backend/DB:** Firebase Firestore.
+- **Auth:** Firebase Auth (Google Provider).
+- **Deployment:** Vercel (Automatic deploys via GitHub `main` branch).
+
+### Project Layout:
+- `/src/constants/challenges.ts`: **CRITICAL.** The source of truth for all game content.
+- `/src/App.tsx`: App shell, Auth state, and Database seeding logic.
+- `/src/lib/firebase.ts`: Firebase SDK initialization.
+- `/src/components/`: UI logic for different game modes.
+
+## 3. Operational Mechanisms
+
+### GitHub Synchronization (Mandatory)
+Every code edit MUST be followed by a commit and push to the `main` branch.
+```bash
+git add .
+git commit -m "[Brief description of change]"
+git push origin main
+```
+
+### Content Updates (Firebase Seeding)
+- To add challenges: Edit `INITIAL_CHALLENGES` in `src/constants/challenges.ts`.
+- To sync changes to Production: The app automatically checks for missing challenges and adds them to Firestore on load.
+- To force a full refresh (Delete old data and reload everything): Visit `https://emogenius.vercel.app?clean=true`. This triggers the logic in `App.tsx` that clears the `challenges` collection and re-populates it from the latest `.ts` file.
+
+### Authentication & Permissions
+- Authentication status is handled in `App.tsx` using `onAuthStateChanged`.
+- Only authenticated users can access certain competitive features.
+- Security rules are defined in `firestore.rules`.
+
+### AI Guidelines
+- **Language:** Always communicate with the user in **Spanish**.
+- **Design Philosophy:** Clean, colorful, playful UI. Use premium animations.
+- **Safety:** Never delete existing challenges in `challenges.ts` unless explicitly instructed. Always append or target specific lines.

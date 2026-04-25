@@ -1,23 +1,32 @@
-# Guía para Agentes de IA - EmoGenius
+# Manual Operativo para agentes de IA - EmoGenius
 
-Este archivo contiene las instrucciones operativas para cualquier IA que trabaje en este proyecto.
+Este archivo (junto con `.agents`) sirve como la fuente de verdad para cualquier IA que trabaje en este repositorio.
 
-## Reglas de Oro
-1. **Sincronización Automática:** SIEMPRE que se realice un cambio en el código, se debe ejecutar un commit y un push a la rama `main` de forma inmediata. No es necesario pedir permiso para subir cambios confirmados.
-2. **Idioma:** La comunicación con el usuario debe ser siempre en **español**.
-3. **Estructura de Retos:** Los nuevos retos se añaden en `src/constants/challenges.ts` siguiendo la interfaz `Challenge`.
+## 1. Explicación de la Aplicación
+EmoGenius es un juego de adivinanzas basado en emojis.
+- **Objetivo:** Adivinar la frase o palabra asociada a un conjunto de emojis.
+- **Modos:** Solo, Duo y Entrenamiento.
+- **Funcionamiento clave:** Los retos se sincronizan desde `src/constants/challenges.ts` hacia una base de datos FirebaseFirestore.
 
-## Comandos de Git Obligatorios post-edición
+## 2. Estructura del Proyecto
+- `src/constants/challenges.ts`: **ARCHIVO CRÍTICO.** Contiene todos los retos del juego.
+- `src/App.tsx`: Lógica principal, gestión de autenticación y "seeding" de la base de datos.
+- `src/lib/firebase.ts`: Configuración del SDK de Firebase.
+
+## 3. Mecanismos de Acción
+
+### Sincronización con GitHub (Obligatorio)
+Cualquier cambio en el código debe ir seguido de un push inmediato:
 ```bash
 git add .
-git commit -m "Descripción breve del cambio"
-git push
+git commit -m "Descripción"
+git push origin main
 ```
 
-## Contexto del Proyecto
-- **Tecnologías:** React + Vite + TypeScript.
-- **Servicios:** Firebase (Firestore) y Gemini API para la generación/validación de retos si fuera necesario.
-- **Objetivo:** Un juego de adivinar conceptos mediante emojis con modos Solo, Duo y Entrenamiento.
+### Actualización de Retos (Firebase)
+- Para añadir retos: Editar `challenges.ts`.
+- Para forzar una limpieza y recarga total de la base de datos: Cargar `https://emogenius.vercel.app?clean=true`. Esto borra la colección de Firestore y la vuelve a llenar con lo que haya en el código.
 
-## Gestión de Dependencias
-Antes de instalar nuevos paquetes, verificar si ya existen en `package.json`. Preferir soluciones ligeras.
+### Reglas de Comunicación
+- **Idioma:** Siempre en **español**.
+- **Seguridad:** No borrar retos existentes sin permiso explícito. Preferir siempre añadir o modificar líneas específicas.
