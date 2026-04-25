@@ -1,10 +1,10 @@
 {
-  "projectId": "semanaia",
-  "appId": "1:757915574456:web:0a9151d0d036f55426144d",
-  "apiKey": "AIzaSyDIcHezbjL6KtvBUDlDniHOlslr0K35cqw",
-  "authDomain": "semanaia.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-7f5b73c0-fb3d-4b76-bc9e-02881e7f01ef",
-  "storageBucket": "semanaia.firebasestorage.app",
-  "messagingSenderId": "757915574456",
+  "projectId": "emogenius-pz",
+  "appId": "1:910924899484:web:87a2b992432fad126b3959",
+  "apiKey": "AIzaSyATlDE6-_dCOT2d76My6xx-ECn3lAMn5D0",
+  "authDomain": "emogenius-pz.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "emogenius-pz.firebasestorage.app",
+  "messagingSenderId": "910924899484",
   "measurementId": ""
 }
