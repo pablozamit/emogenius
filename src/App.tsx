@@ -174,6 +174,12 @@ export default function App() {
                   shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
                   onClick={() => setMode('solo')}
                 />
+                <MenuButton 
+                  icon={<Users className="w-10 h-10" />}
+                  title="DUELO DUO"
+                  description="Adivina en pareja"
+                  color="bg-[#00D1FF]"
+                  shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
                   onClick={() => user ? setMode('duo') : handleLogin()}
                 />
                 <MenuButton 

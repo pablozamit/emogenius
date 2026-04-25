@@ -7,7 +7,7 @@
 - Creación de `src/services/battleService.ts` para gestión multijugador 2v2.
 - Creación de componentes en `src/components/Battle2v2/` (Battle2v2, Lobby, MatchView).
 - Modificación de `src/types.ts` para incluir estructuras de batalla.
-- Integración en `src/App.tsx` con un nuevo modo de juego "Batalla 2v2".
+- Integración en `src/App.tsx` con un nuevo modo de juego "Batalla 2v2" (fijado error de sintaxis en el componente Duo).
 - Ajuste de `src/components/EmojiPicker.tsx` para mayor flexibilidad visual.
 - Sincronización completa con GitHub en branch `main`.
 
