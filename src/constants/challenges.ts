@@ -1,7 +1,7 @@
 import { Challenge } from '../types';
 
 export const INITIAL_CHALLENGES: Challenge[] = [
-  // CINE & ENTRETENIMIENTO
+  // ARTE: CINE, SERIES Y PINTURA
   { emoji: "🤫🐑", phrase: "El silencio de los corderos", category: "Arte", subcategory: "Cine" },
   { emoji: "🚢🧊", phrase: "Titanic", category: "Arte", subcategory: "Cine" },
   { emoji: "👑🦁", phrase: "El Rey León", category: "Arte", subcategory: "Cine" },
@@ -26,8 +26,23 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🏃‍♂️💨🍫", phrase: "Forrest Gump", category: "Arte", subcategory: "Cine" },
   { emoji: "🕶️🧔🔫", phrase: "John Wick", category: "Arte", subcategory: "Cine" },
   { emoji: "🎩🐰🕳️", phrase: "Alicia en el país de las maravillas", category: "Arte", subcategory: "Cine" },
+  { emoji: "🛀🚿🔪", phrase: "Psicosis", category: "Arte", subcategory: "Cine" },
+  { emoji: "⏳🪐🖤", phrase: "Interstellar", category: "Arte", subcategory: "Cine" },
+  { emoji: "🩰🦢🌑", phrase: "Cisne Negro", category: "Arte", subcategory: "Cine" },
+  { emoji: "🎩🍫🏭", phrase: "Wonka", category: "Arte", subcategory: "Cine" },
+  { emoji: "👨‍🍳🐭🍝", phrase: "Ratatouille", category: "Arte", subcategory: "Cine" },
+  { emoji: "🎈🤡🏠", phrase: "It", category: "Arte", subcategory: "Cine" },
+  { emoji: "🏎️💨🔥", phrase: "Fast & Furious", category: "Arte", subcategory: "Cine" },
+  { emoji: "👩‍🏫🎶🏔️", phrase: "Sonrisas y Lágrimas", category: "Arte", subcategory: "Cine" },
+  { emoji: "🧪🧟‍♂️🏙️", phrase: "Resident Evil", category: "Arte", subcategory: "Cine" },
+  { emoji: "🐜👨", phrase: "Ant-Man", category: "Arte", subcategory: "Cine" },
+  { emoji: "🌑🧛‍♂️🏰", phrase: "Drácula", category: "Arte", subcategory: "Cine" },
+  { emoji: "🏹🔥👧", phrase: "Los Juegos del Hambre", category: "Arte", subcategory: "Cine" },
+  { emoji: "🎩🎩🐰", phrase: "El truco final", category: "Arte", subcategory: "Cine" },
+  { emoji: "🏙️🦾👮‍♂️", phrase: "RoboCop", category: "Arte", subcategory: "Cine" },
+  { emoji: "👹🏰🌹", phrase: "La Bella y la Bestia", category: "Arte", subcategory: "Cine" },
 
-  // MÚSICA
+  // ARTE: MÚSICA
   { emoji: "👑🐝", phrase: "Beyoncé", category: "Arte", subcategory: "Música" },
   { emoji: "🎸🇬🇧💇‍♂️", phrase: "The Beatles", category: "Arte", subcategory: "Música" },
   { emoji: "🕺🧤✨", phrase: "Michael Jackson", category: "Arte", subcategory: "Música" },
@@ -36,8 +51,13 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🔥💃🎷", phrase: "Rosalía", category: "Arte", subcategory: "Música" },
   { emoji: "👱‍♀️🎤🎹", phrase: "Taylor Swift", category: "Arte", subcategory: "Música" },
   { emoji: "🍍🍕🏖️", phrase: "Bad Bunny", category: "Arte", subcategory: "Música" },
+  { emoji: "🌑🎹🎹", phrase: "Claro de luna", category: "Arte", subcategory: "Música" },
+  { emoji: "💎👩‍🎤", phrase: "Rihanna", category: "Arte", subcategory: "Música" },
+  { emoji: "⚡🇬🇧👨‍🎤", phrase: "David Bowie", category: "Arte", subcategory: "Música" },
+  { emoji: "🇯🇲🦁🎸", phrase: "Bob Marley", category: "Arte", subcategory: "Música" },
+  { emoji: "🎤🧊👶", phrase: "Ice Ice Baby", category: "Arte", subcategory: "Música" },
 
-  // GEOGRAFÍA
+  // GEOGRAFÍA: PAÍSES Y CIUDADES
   { emoji: "🥖🇫🇷🥐", phrase: "Francia", category: "Geografía", subcategory: "Países" },
   { emoji: "🍕🇮🇹🏟️", phrase: "Italia", category: "Geografía", subcategory: "Países" },
   { emoji: "⛩️🇯🇵🍱", phrase: "Japón", category: "Geografía", subcategory: "Países" },
@@ -55,10 +75,27 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "👗🇪🇸🥘", phrase: "España", category: "Geografía", subcategory: "Países" },
   { emoji: "🌊🇵🇹⛪", phrase: "Portugal", category: "Geografía", subcategory: "Países" },
   { emoji: "🌷🇳🇱🚲", phrase: "Países Bajos", aliases: ["Holanda"], category: "Geografía", subcategory: "Países" },
-  { emoji: "🏜️🏜️🔥", phrase: "Desierto", category: "Geografía", subcategory: "Naturaleza" },
   { emoji: "🌊🎭🇮🇹", phrase: "Venecia", category: "Geografía", subcategory: "Ciudades" },
   { emoji: "🗼🌉🌉", phrase: "San Francisco", category: "Geografía", subcategory: "Ciudades" },
   { emoji: "🏗️🏙️🇦🇪", phrase: "Dubai", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🏔️🇨🇱🇦🇷", phrase: "Los Andes", category: "Geografía", subcategory: "Naturaleza" },
+  { emoji: "🗽🗽🌉", phrase: "Estatua de la Libertad", category: "Geografía", subcategory: "Monumento" },
+  { emoji: "🏯🇯🇵🌸", phrase: "Kyoto", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🌉🇵🇹⛪", phrase: "Lisboa", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🌲🇷🇺❄️", phrase: "Siberia", category: "Geografía", subcategory: "Naturaleza" },
+  { emoji: "🏜️🏜️🐪", phrase: "Sáhara", category: "Geografía", subcategory: "Naturaleza" },
+  { emoji: "🏟️🏛️🇮🇹", phrase: "Coliseo", category: "Geografía", subcategory: "Monumento" },
+  { emoji: "🚠🇧🇷⛰️", phrase: "Río de Janeiro", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "💃🥘⛪", phrase: "Sevilla", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🏔️🇳🇵🧗", phrase: "Himalaya", category: "Geografía", subcategory: "Naturaleza" },
+  { emoji: "🥐🇫🇷🗼", phrase: "París", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🐨🇦🇺🏢", phrase: "Sídney", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🏰🇷🇺❄️", phrase: "Moscú", category: "Geografía", subcategory: "Ciudades" },
+  { emoji: "🌵🇲🇽🌮", phrase: "México", category: "Geografía", subcategory: "Países" },
+  { emoji: "🏈🇺🇸🗽", phrase: "Estados Unidos", category: "Geografía", subcategory: "Países" },
+  { emoji: "🐘🇹🇭🏝️", phrase: "Tailandia", category: "Geografía", subcategory: "Países" },
+  { emoji: "🍷🇦🇷🏔️", phrase: "Argentina", category: "Geografía", subcategory: "Países" },
+  { emoji: "🌋🇮🇸❄️", phrase: "Islandia", category: "Geografía", subcategory: "Países" },
 
   // HISTORIA Y PERSONAJES
   { emoji: "🐴🔥🗼", phrase: "Troya", category: "Historia", subcategory: "Guerra" },
@@ -75,8 +112,13 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🍎📐📉", phrase: "Newton", category: "Historia", subcategory: "Personaje" },
   { emoji: "🛸🏛️🇪🇬", phrase: "Cleopatra", category: "Historia", subcategory: "Personaje" },
   { emoji: "🎨🧔🚁", phrase: "Leonardo da Vinci", category: "Historia", subcategory: "Personaje" },
+  { emoji: "🗿🗿🏝️", phrase: "Isla de Pascua", category: "Historia", subcategory: "Hito" },
+  { emoji: "🏛️🛡️⚔️", phrase: "Esparta", category: "Historia", subcategory: "Civilización" },
+  { emoji: "🚂💨🛤️", phrase: "Orient Express", category: "Historia", subcategory: "Hito" },
+  { emoji: "📜🏛️📜", phrase: "Biblioteca de Alejandría", category: "Historia", subcategory: "Hito" },
+  { emoji: "👑🥀⚔️", phrase: "Guerra de las Dos Rosas", category: "Historia", subcategory: "Guerra" },
 
-  // REFRANES
+  // REFRANES Y DICHOS
   { emoji: "💧🚫🍷", phrase: "Agua que no has de beber déjala correr", category: "Refranes", subcategory: "Dicho" },
   { emoji: "🐦✊🌳", phrase: "Más vale pájaro en mano que ciento volando", category: "Refranes", subcategory: "Dicho" },
   { emoji: "🐴👀🤐", phrase: "A caballo regalado no le mires el diente", category: "Refranes", subcategory: "Dicho" },
@@ -87,6 +129,19 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🍎🌳📍", phrase: "La manzana no cae lejos del árbol", category: "Refranes", subcategory: "Dicho" },
   { emoji: "🌙🏙️🌄", phrase: "A quien madruga Dios le ayuda", category: "Refranes", subcategory: "Dicho" },
   { emoji: "👞🛠️🚶‍♂️", phrase: "Zapatero a tus zapatos", category: "Refranes", subcategory: "Dicho" },
+  { emoji: "🐒👑🧤", phrase: "Aunque la mona se vista de seda, mona se queda", category: "Refranes" },
+  { emoji: "🐕🗣️🚫咬", phrase: "Perro que ladra no muerde", category: "Refranes" },
+  { emoji: "🕰️💰", phrase: "El tiempo es oro", category: "Refranes" },
+  { emoji: "🌬️🌾🌪️", phrase: "Quien siembra vientos, recoge tempestades", category: "Refranes" },
+  { emoji: "🦷🔨🏙️", phrase: "Ojo por ojo, diente por diente", category: "Refranes" },
+  { emoji: "🐟👄💀", phrase: "Por la boca muere el pez", category: "Refranes" },
+  { emoji: "🧗‍♂️⬇️", phrase: "Todo lo que sube, tiene que bajar", category: "Refranes" },
+  { emoji: "🍞🥖🥖", phrase: "A falta de pan, buenas son tortas", category: "Refranes" },
+  { emoji: "🚪🌳🚪", phrase: "No se pueden poner puertas al campo", category: "Refranes" },
+  { emoji: "🌞🕶️🌞", phrase: "No hay nada nuevo bajo el sol", category: "Refranes" },
+  { emoji: "🤫🙊🤫", phrase: "Ver, oír y callar", category: "Refranes" },
+  { emoji: "🏠🏰", phrase: "Mi casa es mi castillo", category: "Refranes" },
+  { emoji: "🐔🥚❓", phrase: "¿Qué fue antes, el huevo o la gallina?", category: "Refranes" },
 
   // DEPORTE
   { emoji: "⚽🏆🇦🇷", phrase: "Mundial de fútbol", category: "Deporte", subcategory: "Fútbol" },
@@ -99,17 +154,25 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🏀🥇🦍", phrase: "LeBron James", category: "Deporte", subcategory: "Baloncesto" },
   { emoji: "⚽🐐🇵🇹", phrase: "Cristiano Ronaldo", category: "Deporte", subcategory: "Fútbol" },
   { emoji: "🎾👑🇨🇭", phrase: "Roger Federer", category: "Deporte", subcategory: "Tenis" },
+  { emoji: "⚽🐐🇦🇷", phrase: "Messi", category: "Deporte", subcategory: "Fútbol" },
+  { emoji: "🏌️‍♂️⛳🌳", phrase: "Golf", category: "Deporte" },
+  { emoji: "🏐🏖️☀️", phrase: "Voley Playa", category: "Deporte" },
 
   // GASTRONOMÍA
   { emoji: "🥘🐰🐌", phrase: "Paella", category: "Gastronomía", subcategory: "Plato" },
-  { emoji: "🌮🇲🇽🌶️", phrase: "Taco", category: "Gastronomía", subcategory: "Plato" },
+  { emoji: " taco🌮🇲🇽🌶️", phrase: "Taco", category: "Gastronomía", subcategory: "Plato" },
   { emoji: "🍣🇯🇵🍱", phrase: "Sushi", category: "Gastronomía", subcategory: "Plato" },
   { emoji: "🍕🇮🇹🧀", phrase: "Pizza", category: "Gastronomía", subcategory: "Plato" },
   { emoji: "🍔🇺🇸🍟", phrase: "Hamburguesa", category: "Gastronomía", subcategory: "Plato" },
   { emoji: "🥐🇫🇷☕", phrase: "Croissant", category: "Gastronomía", subcategory: "Reposteria" },
   { emoji: "🍲🍛🇮🇳", phrase: "Curry", aliases: ["Arroz al curry", "Tikka Masala"], category: "Gastronomía", subcategory: "Plato" },
+  { emoji: "🌽🇲🇽🥟", phrase: "Tamales", category: "Gastronomía", subcategory: "Plato" },
+  { emoji: "🍚🦐🥢", phrase: "Arroz frito", category: "Gastronomía", subcategory: "Plato" },
+  { emoji: "🥓🍳🇬🇧", phrase: "Desayuno inglés", category: "Gastronomía", subcategory: "Plato" },
+  { emoji: "🥖🍷🧀", phrase: "Picnic", category: "Gastronomía" },
+  { emoji: "🍫🍫🍰", phrase: "Tarta de chocolate", category: "Gastronomía" },
 
-  // PALABRA ALEATORIA / FONÉTICA
+  // PALABRA ALEATORIA / CONCEPTOS CREATIVOS
   { emoji: "✏️🎀🔵", phrase: "Lapislázuli", category: "Palabra Aleatoria" },
   { emoji: "🦶🧗‍♂️", phrase: "Pies de gato", category: "Palabra Aleatoria" },
   { emoji: "🧦🌙", phrase: "Media luna", category: "Palabra Aleatoria" },
@@ -120,60 +183,14 @@ export const INITIAL_CHALLENGES: Challenge[] = [
   { emoji: "🧛‍♂️🥩", phrase: "Chuleta de vampiro", category: "Palabra Aleatoria" },
   { emoji: "🌈🦎", phrase: "Camaleón", category: "Palabra Aleatoria" },
   { emoji: "🏹🎯", phrase: "Tiro con arco", category: "Palabra Aleatoria" },
-  
-  // MÁS PELÍCULAS
-  { emoji: "🐜👨", phrase: "Ant-Man", category: "Arte", subcategory: "Cine" },
-  { emoji: "🌑🧛‍♂️🏰", phrase: "Drácula", category: "Arte", subcategory: "Cine" },
-  { emoji: "🤡🎈🎈", phrase: "It", category: "Arte", subcategory: "Cine" },
-  { emoji: "🧸🚲🏚️", phrase: "E.T.", category: "Arte", subcategory: "Cine" },
-  { emoji: "🎩✨🚂", phrase: "Harry Potter", category: "Arte", subcategory: "Cine" },
-  { emoji: "🏹🔥👧", phrase: "Los Juegos del Hambre", category: "Arte", subcategory: "Cine" },
-  { emoji: "🎩🎩🐰", phrase: "El truco final", category: "Arte", subcategory: "Cine" },
-  { emoji: "🏙️🦾👮‍♂️", phrase: "RoboCop", category: "Arte", subcategory: "Cine" },
-  { emoji: "👹🏰🌹", phrase: "La Bella y la Bestia", category: "Arte", subcategory: "Cine" },
-
-  // MÁS PAÍSES
-  { emoji: "🥟🇨🇳🐉", phrase: "China", category: "Geografía", subcategory: "Países" },
-  { emoji: "🍝🇮🇹🏟️", phrase: "Italia", category: "Geografía", subcategory: "Países" },
-  { emoji: "🍻🇩🇪🥨", phrase: "Alemania", category: "Geografía", subcategory: "Países" },
-  { emoji: "🥘🇪🇸☀️", phrase: "España", category: "Geografía", subcategory: "Países" },
-  { emoji: "🌵🇲🇽🌮", phrase: "México", category: "Geografía", subcategory: "Países" },
-  { emoji: "🏈🇺🇸🗽", phrase: "Estados Unidos", category: "Geografía", subcategory: "Países" },
-  { emoji: "🐘🇹🇭🏝️", phrase: "Tailandia", category: "Geografía", subcategory: "Países" },
-  { emoji: "🍷🇦🇷🏔️", phrase: "Argentina", category: "Geografía", subcategory: "Países" },
-  { emoji: "🍛🇮🇳🛕", phrase: "India", category: "Geografía", subcategory: "Países" },
-  { emoji: "🦁🇿🇦🦒", phrase: "Sudáfrica", category: "Geografía", subcategory: "Países" },
-  { emoji: "🌋🇮🇸❄️", phrase: "Islandia", category: "Geografía", subcategory: "Países" },
-  
-  // MÁS CIUDADES
-  { emoji: "💂‍♂️🇬🇧🎡", phrase: "Londres", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🥐🇫🇷🗼", phrase: "París", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🍎🏦🚕", phrase: "Nueva York", aliases: ["New York", "NYC"], category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🛶🇮🇹🎭", phrase: "Venecia", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🍺🇩🇪🎡", phrase: "Múnich", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "⛩️🇯🇵🏙️", phrase: "Tokio", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🌉🇺🇸🌁", phrase: "San Francisco", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🏛️🇬🇷🏺", phrase: "Atenas", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🐨🇦🇺🏢", phrase: "Sídney", category: "Geografía", subcategory: "Ciudades" },
-  { emoji: "🏰🇷🇺❄️", phrase: "Moscú", category: "Geografía", subcategory: "Ciudades" },
-
-  // MÁS DEPORTES Y PERSONAJES
-  { emoji: "⚽🐐🇦🇷", phrase: "Messi", category: "Deporte", subcategory: "Fútbol" },
-  { emoji: "🏀🐐🇺🇸", phrase: "Michael Jordan", category: "Deporte", subcategory: "Baloncesto" },
-  { emoji: "🎾👑🇪🇸", phrase: "Rafael Nadal", category: "Deporte", subcategory: "Tenis" },
-  { emoji: "🏎️🏎️🏆", phrase: "Fórmula 1", category: "Deporte", subcategory: "Motor" },
-  { emoji: "🏌️‍♂️⛳🌳", phrase: "Golf", category: "Deporte" },
-  { emoji: "🏐🏖️☀️", phrase: "Voley Playa", category: "Deporte" },
-
-  // MÁS REFRANES
-  { emoji: "🐒👑🧤", phrase: "Aunque la mona se vista de seda, mona se queda", category: "Refranes" },
-  { emoji: "🐕🗣️🚫咬", phrase: "Perro que ladra no muerde", category: "Refranes" },
-  { emoji: "🕰️💰", phrase: "El tiempo es oro", category: "Refranes" },
-  { emoji: "🌬️🌾🌪️", phrase: "Quien siembra vientos, recoge tempestades", category: "Refranes" },
-  { emoji: "🦷🔨🏙️", phrase: "Ojo por ojo, diente por diente", category: "Refranes" },
-  { emoji: "🐟👄💀", phrase: "Por la boca muere el pez", category: "Refranes" },
-  { emoji: "🧗‍♂️⬇️", phrase: "Todo lo que sube, tiene que bajar", category: "Refranes" },
-  { emoji: "🍞🥖🥖", phrase: "A falta de pan, buenas son tortas", category: "Refranes" }
+  { emoji: "🕰️🚶‍♂️🔙", phrase: "Viaje en el tiempo", category: "Palabra Aleatoria" },
+  { emoji: "🦶🖨️", phrase: "Huella dactilar", category: "Palabra Aleatoria" },
+  { emoji: "🧠⚡", phrase: "Lluvia de ideas", category: "Palabra Aleatoria" },
+  { emoji: "👄🍬", phrase: "Dulce de leche", category: "Palabra Aleatoria" },
+  { emoji: "🦷🧚‍♀️", phrase: "Hada de los dientes", category: "Palabra Aleatoria" },
+  { emoji: "👁️🌪️", phrase: "Ojo del huracán", category: "Palabra Aleatoria" },
+  { emoji: "🦶📸", phrase: "Fotocopia", category: "Palabra Aleatoria" },
+  { emoji: "🧤🧊", phrase: "Mano fría", category: "Palabra Aleatoria" },
+  { emoji: "👂🐚🌊", phrase: "Oír el mar", category: "Palabra Aleatoria" },
+  { emoji: "🌈🥘", phrase: "Arco iris", category: "Palabra Aleatoria" }
 ];
-
-
