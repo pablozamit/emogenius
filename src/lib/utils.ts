@@ -26,8 +26,30 @@ export function normalizeString(str: string): string {
     .trim()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, "") // Keep spaces
-    .replace(/\s+/g, " "); // Collapse multiple spaces
+    .replace(/[^a-z0-9\s]/g, "") 
+    .replace(/\s+/g, " ");
+}
+
+/**
+ * Distancia de Levenshtein para tolerancia a typos
+ */
+function getLevenshteinDistance(a: string, b: string): number {
+  const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) matrix[0][j] = j;
+
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      if (a[i - 1] === b[j - 1]) matrix[i][j] = matrix[i - 1][j - 1];
+      else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  return matrix[a.length][b.length];
 }
 
 export function calculateSimilarityScore(input: string, target: string, aliases: string[] = []): { similarity: number, isCorrect: boolean, score: number } {
@@ -42,32 +64,39 @@ export function calculateSimilarityScore(input: string, target: string, aliases:
     const normalizedTarget = normalizeString(t);
     if (!normalizedTarget) continue;
     
-    // Exact match
     if (normalizedInput === normalizedTarget) {
       bestSimilarity = 1;
       break;
     }
 
-    // Keyword match: if input contains the target or vice-versa (as whole words)
+    // Keyword logic
     const inputWords = normalizedInput.split(" ");
     const targetWords = normalizedTarget.split(" ");
-    
-    const containsTarget = targetWords.every(word => inputWords.includes(word));
-    const isContained = inputWords.every(word => targetWords.includes(word));
+    const containsAllTargetWords = targetWords.every(word => inputWords.includes(word));
+    const isInsideTargetWords = inputWords.every(word => targetWords.includes(word));
 
-    let currentSimilarity = stringSimilarity(normalizedInput, normalizedTarget);
+    let currentSim = stringSimilarity(normalizedInput, normalizedTarget);
     
-    // Boost if it's a semantic subset (e.g., "arroz al curry" vs "curry")
-    if (containsTarget || isContained) {
-      currentSimilarity = Math.max(currentSimilarity, 0.9);
+    // Levenshtein check: si el error es de solo 1 o 2 letras (según longitud)
+    const distance = getLevenshteinDistance(normalizedInput, normalizedTarget);
+    const maxAllowedDist = normalizedTarget.length > 6 ? 2 : 1;
+    
+    if (distance <= maxAllowedDist) {
+      // Reemplazamos la similitud por un valor alto si es un typo leve
+      currentSim = Math.max(currentSim, 0.85);
     }
 
-    if (currentSimilarity > bestSimilarity) {
-      bestSimilarity = currentSimilarity;
+    if (containsAllTargetWords || isInsideTargetWords) {
+      currentSim = Math.max(currentSim, 0.9);
+    }
+
+    if (currentSim > bestSimilarity) {
+      bestSimilarity = currentSim;
     }
   }
   
-  const isCorrect = bestSimilarity >= 0.85;
+  // Umbral más permisivo (antes 0.85)
+  const isCorrect = bestSimilarity >= 0.80;
   const score = Math.round(bestSimilarity * 100);
   
   return { similarity: bestSimilarity, isCorrect, score };
