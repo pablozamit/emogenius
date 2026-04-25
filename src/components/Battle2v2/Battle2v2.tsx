@@ -9,24 +9,25 @@ import { Trophy, Swords, Users, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const Battle2v2: React.FC = () => {
+  const [battleId, setBattleId] = useState<string | null>(null);
   const [battle, setBattle] = useState<BattleGame | null>(null);
   const [loading, setLoading] = useState(false);
   const user = auth.currentUser;
 
   useEffect(() => {
-    if (!battle?.id) return;
+    if (!battleId) return;
 
-    const unsub = onSnapshot(doc(db, 'battles', battle.id), (doc) => {
+    const unsub = onSnapshot(doc(db, 'battles', battleId), (doc) => {
       if (doc.exists()) {
         setBattle({ id: doc.id, ...doc.data() } as BattleGame);
       }
     });
 
     return () => unsub();
-  }, [battle?.id]);
+  }, [battleId]);
 
   useEffect(() => {
-    if (!battle && user) {
+    if (!battleId && user) {
       handleSearchGame();
     }
   }, [user]);
@@ -35,13 +36,13 @@ const Battle2v2: React.FC = () => {
     if (!user) return;
     setLoading(true);
     try {
-      const publicBattleId = await findPublicBattle();
-      if (publicBattleId) {
-        await joinBattle(publicBattleId, user);
-        setBattle({ id: publicBattleId } as BattleGame);
+      const publicId = await findPublicBattle();
+      if (publicId) {
+        await joinBattle(publicId, user);
+        setBattleId(publicId);
       } else {
         const newId = await createBattle(user);
-        setBattle({ id: newId } as BattleGame);
+        setBattleId(newId);
       }
     } catch (error) {
       console.error(error);
@@ -67,7 +68,7 @@ const Battle2v2: React.FC = () => {
     }
   }, [battle]);
 
-  if (!battle || loading) {
+  if (!battleId || !battle || loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
         <motion.div 

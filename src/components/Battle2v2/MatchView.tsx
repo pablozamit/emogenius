@@ -14,8 +14,17 @@ interface MatchViewProps {
 const MatchView: React.FC<MatchViewProps> = ({ battle }) => {
   const user = auth.currentUser;
   const game = battle.gameState;
-  const myTeamIdx = battle.teams.findIndex(t => t.uids.includes(user?.uid || ''));
-  const myTeam = battle.teams[myTeamIdx];
+  const myTeamIdx = battle.teams?.findIndex(t => t.uids.includes(user?.uid || '')) ?? -1;
+  const myTeam = battle.teams ? battle.teams[myTeamIdx] : null;
+
+  if (myTeamIdx === -1 || !myTeam || !game) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+         <Loader2 className="text-yellow-400 animate-spin" size={48} />
+      </div>
+    );
+  }
+
   const rivalTeamIdx = 1 - myTeamIdx;
   const rivalTeam = battle.teams[rivalTeamIdx];
   
