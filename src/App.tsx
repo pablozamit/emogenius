@@ -30,7 +30,19 @@ export default function App() {
   useEffect(() => {
     const initChallenges = async () => {
       try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const shouldClean = urlParams.get('clean') === 'true';
         const challengesCol = collection(db, 'challenges');
+
+        if (shouldClean) {
+          const snapshot = await getDocs(challengesCol);
+          const batch = writeBatch(db);
+          snapshot.docs.forEach((d) => batch.delete(d.ref));
+          await batch.commit();
+          window.location.href = window.location.origin;
+          return;
+        }
+
         const snapshot = await getDocs(challengesCol);
         const existingPhrases = new Set(snapshot.docs.map(d => `${d.data().phrase}_${d.data().category}`));
         
