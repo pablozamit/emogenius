@@ -20,7 +20,7 @@ service cloud.firestore {
 
     match /responses/{responseId} {
       allow create: if isSignedIn();
-      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow read: if isSignedIn();
     }
 
     match /users/{userId} {
