@@ -25,6 +25,12 @@ const Battle2v2: React.FC = () => {
     return () => unsub();
   }, [battle?.id]);
 
+  useEffect(() => {
+    if (!battle && user) {
+      handleSearchGame();
+    }
+  }, [user]);
+
   const handleSearchGame = async () => {
     if (!user) return;
     setLoading(true);
@@ -61,30 +67,52 @@ const Battle2v2: React.FC = () => {
     }
   }, [battle]);
 
-  if (!battle) {
+  if (!battle || loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] p-6">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
         <motion.div 
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 shadow-2xl max-w-md w-full text-center"
+          className="bg-white/10 backdrop-blur-xl p-12 rounded-[40px] border border-white/20 shadow-2xl max-w-md w-full relative overflow-hidden"
         >
-          <div className="bg-yellow-400 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-yellow-400/20">
-            <Swords size={40} className="text-black" />
-          </div>
-          <h2 className="text-4xl font-black text-white mb-4 italic tracking-tighter">BATALLA 2V2</h2>
-          <p className="text-white/70 mb-8 font-medium">
-            Forma equipo con amigos o desconocidos en la prueba definitiva de ingenio con emojis. 30 emojis, 12 retos, una sola joya.
-          </p>
+          {/* Animated background effects */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1]
+            }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="absolute inset-0 bg-yellow-400/20"
+          />
 
-          <button
-            onClick={handleSearchGame}
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-black py-4 rounded-2xl shadow-xl shadow-orange-500/20 hover:scale-[1.02] active:scale-95 transition-all text-xl flex items-center justify-center gap-3"
-          >
-            {loading ? <Loader2 className="animate-spin" /> : <Users size={24} />}
-            {loading ? 'BUSCANDO...' : 'BUSCAR PARTIDA'}
-          </button>
+          <div className="relative z-10">
+            <div className="bg-yellow-400 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-yellow-400/20 rotate-3">
+              <Loader2 size={48} className="text-black animate-spin" />
+            </div>
+            
+            <h2 className="text-4xl font-black text-white mb-2 italic tracking-tighter">BUSCANDO...</h2>
+            <p className="text-white/60 mb-8 font-medium">
+              Conectando con la red de EmoGenius para encontrar gladiadores...
+            </p>
+
+            <div className="flex justify-center gap-2">
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    y: [0, -10, 0],
+                    opacity: [0.3, 1, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 1, 
+                    repeat: Infinity,
+                    delay: i * 0.2 
+                  }}
+                  className="w-3 h-3 bg-yellow-400 rounded-full"
+                />
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     );
