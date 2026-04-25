@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Users, User, Play, Gamepad2, Info, Smile, Sparkles } from 'lucide-react';
-import { auth, googleProvider, db, signInWithPopup } from './lib/firebase';
-import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
+import { Trophy, Users, User, Play, Gamepad2, Info, Smile, Sparkles, LogIn } from 'lucide-react';
+import { auth, googleProvider, db, signInWithPopup, signInAnonymously } from './lib/firebase';
+import { onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
 import { collection, getDocs, doc, writeBatch, query, limit } from 'firebase/firestore';
 import SoloMode from './components/SoloMode';
 import DuoMode from './components/DuoMode';
@@ -84,6 +84,20 @@ export default function App() {
     }
   };
 
+  const ensureUser = async (targetMode: GameMode) => {
+    if (user) {
+      setMode(targetMode);
+      return;
+    }
+    
+    try {
+      await signInAnonymously(auth);
+      setMode(targetMode);
+    } catch (error) {
+      console.error("Anonymous login failed", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-yellow-50 flex items-center justify-center">
@@ -128,23 +142,36 @@ export default function App() {
             </div>
           </motion.div>
           
-          {user ? (
-            <div className="flex items-center gap-3 bg-white border-4 border-[#2D2D2D] rounded-full px-4 py-2 shadow-[4px_4px_0px_0px_#2D2D2D]">
-              <span className="hidden sm:inline text-sm font-black uppercase tracking-tighter">{user.displayName}</span>
-              <img 
-                src={user.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`} 
-                alt="Avatar" 
-                className="w-10 h-10 rounded-full border-2 border-[#2D2D2D]"
-              />
+          <div className="flex items-center gap-4">
+            {user ? (
+              user.isAnonymous ? (
+                <button 
+                  onClick={handleLogin}
+                  className="bg-white border-4 border-[#2D2D2D] shadow-[4px_4px_0px_0px_#2D2D2D] px-4 py-2 rounded-xl text-xs font-black transition-all hover:translate-y-0.5 hover:shadow-none flex items-center gap-2"
+                >
+                  <LogIn className="w-4 h-4" />
+                  GUARDAR PROGRESO
+                </button>
+              ) : (
+                <div className="flex items-center gap-3 bg-white border-4 border-[#2D2D2D] px-4 py-2 rounded-xl shadow-[4px_4px_0px_0px_#2D2D2D]">
+                  {user.photoURL && <img src={user.photoURL} alt="" className="w-6 h-6 rounded-lg border-2 border-[#2D2D2D]" />}
+                  <span className="text-xs font-black hidden sm:inline uppercase tracking-tight">{user.displayName}</span>
+                  <button onClick={() => signOut(auth)} className="text-[10px] opacity-40 hover:opacity-100 font-bold uppercase transition-opacity">Salir</button>
+                </div>
+              )
+            ) : (
+              <button 
+                onClick={handleLogin}
+                className="bg-white border-4 border-[#2D2D2D] shadow-[4px_4px_0px_0px_#2D2D2D] px-4 py-2 rounded-xl text-xs font-black transition-all hover:translate-y-0.5 hover:shadow-none flex items-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                CONECTAR
+              </button>
+            )}
+            <div className="bg-[#FFCD4B] px-4 py-2 rounded-xl font-black italic shadow-[4px_4px_0px_0px_#2D2D2D] border-2 border-[#2D2D2D] text-xs">
+              BETA
             </div>
-          ) : (
-            <button 
-              onClick={handleLogin}
-              className="bg-[#00D1FF] border-4 border-[#2D2D2D] px-6 py-3 rounded-2xl text-sm font-black uppercase tracking-widest hover:translate-y-1 hover:shadow-none transition-all shadow-[4px_4px_0px_0px_#2D2D2D]"
-            >
-              Conectarse
-            </button>
-          )}
+          </div>
         </header>
 
         <AnimatePresence mode="wait">
@@ -180,7 +207,7 @@ export default function App() {
                   description="Adivina en pareja"
                   color="bg-[#00D1FF]"
                   shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
-                  onClick={() => user ? setMode('duo') : handleLogin()}
+                  onClick={() => ensureUser('duo')}
                 />
                 <MenuButton 
                   icon={<Swords className="w-10 h-10" />}
@@ -189,13 +216,13 @@ export default function App() {
                   color="bg-[#FF4B91]"
                   textColor="text-white"
                   shadow="shadow-[8px_8px_0px_0px_#2D2D2D]"
-                  onClick={() => user ? setMode('battle') : handleLogin()}
+                  onClick={() => ensureUser('battle')}
                 />
               </div>
 
               <div className="flex justify-center">
                  <button 
-                  onClick={() => user ? setMode('training') : handleLogin()}
+                  onClick={() => ensureUser('training')}
                   className="bg-white border-4 border-[#2D2D2D] px-8 py-4 rounded-[32px] shadow-[6px_6px_0px_0px_#FF4B91] flex items-center gap-3 group hover:translate-y-1 hover:shadow-none transition-all"
                 >
                   <Smile className="w-8 h-8 text-[#FF4B91]" />
