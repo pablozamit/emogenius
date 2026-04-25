@@ -36,6 +36,8 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [editingCell, setEditingCell] = useState<{ id: string, field: keyof Challenge } | null>(null);
   const [editValue, setEditValue] = useState('');
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
@@ -112,11 +114,19 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
     }
   };
 
-  const filteredChallenges = challenges.filter(c =>
-    c.phrase.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    c.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (c.subcategory && c.subcategory.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const categories = Array.from(new Set(challenges.map(c => c.category))).sort();
+  const difficulties = Array.from(new Set(challenges.map(c => c.difficulty).filter(Boolean))).sort();
+
+  const filteredChallenges = challenges.filter(c => {
+    const matchesSearch = c.phrase.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (c.subcategory && c.subcategory.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesCategory = selectedCategory === 'all' || c.category === selectedCategory;
+    const matchesDifficulty = selectedDifficulty === 'all' || c.difficulty === selectedDifficulty;
+
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
 
   if (!isAuthenticated) {
     return (
@@ -177,25 +187,51 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
           <h2 className="text-3xl font-black uppercase italic tracking-tighter">Panel de Admin</h2>
         </div>
 
-        <div className="relative max-w-xs w-full hidden sm:block">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Buscar pregunta..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white border-4 border-[#2D2D2D] rounded-xl pl-12 pr-4 py-2 font-bold outline-none shadow-[4px_4px_0px_0px_#2D2D2D]"
-          />
+        <div className="flex flex-wrap items-center gap-4 flex-1 justify-end">
+          <div className="relative max-w-xs w-full hidden sm:block">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-white border-4 border-[#2D2D2D] rounded-xl pl-12 pr-4 py-2 font-bold outline-none shadow-[4px_4px_0px_0px_#2D2D2D]"
+            />
+          </div>
+
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="bg-white border-4 border-[#2D2D2D] rounded-xl px-4 py-2 font-bold outline-none shadow-[4px_4px_0px_0px_#2D2D2D] appearance-none cursor-pointer hover:translate-y-0.5 hover:shadow-none transition-all"
+          >
+            <option value="all">Todas las Categorías</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+
+          <select
+            value={selectedDifficulty}
+            onChange={(e) => setSelectedDifficulty(e.target.value)}
+            className="bg-white border-4 border-[#2D2D2D] rounded-xl px-4 py-2 font-bold outline-none shadow-[4px_4px_0px_0px_#2D2D2D] appearance-none cursor-pointer hover:translate-y-0.5 hover:shadow-none transition-all"
+          >
+            <option value="all">Todas las Dificultades</option>
+            {difficulties.map(diff => (
+              <option key={diff} value={diff}>{diff}</option>
+            ))}
+          </select>
         </div>
       </header>
 
       <div className="flex-1 bg-white border-4 border-[#2D2D2D] rounded-[32px] shadow-[8px_8px_0px_0px_#2D2D2D] overflow-hidden flex flex-col">
-        <div className="overflow-x-auto">
+        <div className="overflow-auto">
           <table className="w-full text-left border-collapse">
-            <thead>
+            <thead className="sticky top-0 z-10">
               <tr className="bg-[#F3F3F3] border-b-4 border-[#2D2D2D]">
                 <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Pregunta</th>
                 <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Categoría</th>
+                <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Subcategoría</th>
+                <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Dificultad</th>
                 <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Emojis</th>
                 <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Pista 1</th>
                 <th className="px-4 py-4 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">Pista 2</th>
@@ -217,7 +253,7 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                   <tr key={challenge.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-2 min-w-[200px]">
                       <EditableCell
-                        value={challenge.phrase}
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'phrase' ? editValue : challenge.phrase}
                         isEditing={editingCell?.id === challenge.id && editingCell?.field === 'phrase'}
                         onEdit={() => startEditing(challenge.id!, 'phrase', challenge.phrase)}
                         onChange={setEditValue}
@@ -225,31 +261,55 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                         onCancel={() => setEditingCell(null)}
                       />
                     </td>
-                    <td className="px-4 py-2">
-                      <div className="flex flex-col gap-1">
-                        <span className="bg-[#FFCD4B] text-[#2D2D2D] px-2 py-0.5 rounded-lg border-2 border-[#2D2D2D] font-black text-[9px] uppercase w-fit">
-                          {challenge.category}
-                        </span>
-                        {challenge.subcategory && (
-                          <span className="bg-[#00D1FF] text-[#2D2D2D] px-2 py-0.5 rounded-lg border-2 border-[#2D2D2D] font-black text-[9px] uppercase w-fit">
-                            {challenge.subcategory}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-2 font-emoji text-2xl min-w-[100px]">
+                    <td className="px-4 py-2 min-w-[150px]">
                       <EditableCell
-                        value={challenge.emoji}
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'category' ? editValue : challenge.category}
+                        isEditing={editingCell?.id === challenge.id && editingCell?.field === 'category'}
+                        onEdit={() => startEditing(challenge.id!, 'category', challenge.category)}
+                        onChange={setEditValue}
+                        onSave={saveEdit}
+                        onCancel={() => setEditingCell(null)}
+                        className="text-[10px] uppercase font-black"
+                      />
+                    </td>
+                    <td className="px-4 py-2 min-w-[150px]">
+                      <EditableCell
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'subcategory' ? editValue : (challenge.subcategory || '')}
+                        isEditing={editingCell?.id === challenge.id && editingCell?.field === 'subcategory'}
+                        onEdit={() => startEditing(challenge.id!, 'subcategory', challenge.subcategory || '')}
+                        onChange={setEditValue}
+                        onSave={saveEdit}
+                        onCancel={() => setEditingCell(null)}
+                        placeholder="Subcategoría"
+                        className="text-[10px] uppercase font-black"
+                      />
+                    </td>
+                    <td className="px-4 py-2 min-w-[120px]">
+                      <EditableCell
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'difficulty' ? editValue : (challenge.difficulty || '')}
+                        isEditing={editingCell?.id === challenge.id && editingCell?.field === 'difficulty'}
+                        onEdit={() => startEditing(challenge.id!, 'difficulty', challenge.difficulty || '')}
+                        onChange={setEditValue}
+                        onSave={saveEdit}
+                        onCancel={() => setEditingCell(null)}
+                        placeholder="Dificultad"
+                        className="text-[10px] uppercase font-black"
+                      />
+                    </td>
+                    <td className="px-4 py-2 font-emoji text-2xl min-w-[150px]">
+                      <EditableCell
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'emoji' ? editValue : challenge.emoji}
                         isEditing={editingCell?.id === challenge.id && editingCell?.field === 'emoji'}
                         onEdit={() => startEditing(challenge.id!, 'emoji', challenge.emoji)}
                         onChange={setEditValue}
                         onSave={saveEdit}
                         onCancel={() => setEditingCell(null)}
+                        isEmoji
                       />
                     </td>
-                    <td className="px-4 py-2 min-w-[120px]">
+                    <td className="px-4 py-2 min-w-[150px]">
                       <EditableCell
-                        value={challenge.clue1 || ''}
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'clue1' ? editValue : (challenge.clue1 || '')}
                         isEditing={editingCell?.id === challenge.id && editingCell?.field === 'clue1'}
                         onEdit={() => startEditing(challenge.id!, 'clue1', challenge.clue1 || '')}
                         onChange={setEditValue}
@@ -259,9 +319,9 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                         className="text-[10px]"
                       />
                     </td>
-                    <td className="px-4 py-2 min-w-[120px]">
+                    <td className="px-4 py-2 min-w-[150px]">
                       <EditableCell
-                        value={challenge.clue2 || ''}
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'clue2' ? editValue : (challenge.clue2 || '')}
                         isEditing={editingCell?.id === challenge.id && editingCell?.field === 'clue2'}
                         onEdit={() => startEditing(challenge.id!, 'clue2', challenge.clue2 || '')}
                         onChange={setEditValue}
@@ -271,9 +331,9 @@ export default function AdminPanel({ onBack }: AdminPanelProps) {
                         className="text-[10px]"
                       />
                     </td>
-                    <td className="px-4 py-2 min-w-[120px]">
+                    <td className="px-4 py-2 min-w-[150px]">
                       <EditableCell
-                        value={challenge.clue3 || ''}
+                        value={editingCell?.id === challenge.id && editingCell?.field === 'clue3' ? editValue : (challenge.clue3 || '')}
                         isEditing={editingCell?.id === challenge.id && editingCell?.field === 'clue3'}
                         onEdit={() => startEditing(challenge.id!, 'clue3', challenge.clue3 || '')}
                         onChange={setEditValue}
@@ -387,7 +447,8 @@ function EditableCell({
   onSave,
   onCancel,
   placeholder,
-  className
+  className,
+  isEmoji
 }: {
   value: string;
   isEditing: boolean;
@@ -397,13 +458,19 @@ function EditableCell({
   onCancel: () => void;
   placeholder?: string;
   className?: string;
+  isEmoji?: boolean;
 }) {
   if (isEditing) {
     return (
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 min-w-[200px]">
         <input
           autoFocus
-          className={cn("w-full bg-[#F3F3F3] border-2 border-[#2D2D2D] rounded-md px-2 py-1 font-bold outline-none", className)}
+          data-editing-input
+          className={cn(
+            "flex-1 bg-[#F3F3F3] border-4 border-[#2D2D2D] rounded-xl px-3 py-2 font-bold outline-none shadow-[2px_2px_0px_0px_#2D2D2D]",
+            isEmoji && "text-2xl",
+            className
+          )}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={(e) => {
