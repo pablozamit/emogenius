@@ -7,12 +7,13 @@ import { collection, getDocs, doc, writeBatch, query, limit } from 'firebase/fir
 import SoloMode from './components/SoloMode';
 import DuoMode from './components/DuoMode';
 import Battle2v2 from './components/Battle2v2/Battle2v2';
+import AdminPanel from './components/AdminPanel';
 import { cn } from './lib/utils';
 import { INITIAL_CHALLENGES } from './constants/challenges';
 import { Challenge } from './types';
-import { Swords } from 'lucide-react';
+import { Swords, Settings } from 'lucide-react';
 
-type GameMode = 'menu' | 'solo' | 'duo' | 'training' | 'battle' | 'about';
+type GameMode = 'menu' | 'solo' | 'duo' | 'training' | 'battle' | 'about' | 'admin';
 
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -143,6 +144,14 @@ export default function App() {
           </motion.div>
           
           <div className="flex items-center gap-4">
+            {user && (
+              <button
+                onClick={() => setMode('admin')}
+                className="p-2 bg-white border-4 border-[#2D2D2D] rounded-xl shadow-[4px_4px_0px_0px_#2D2D2D] hover:translate-y-0.5 hover:shadow-none transition-all group"
+              >
+                <Settings className="w-5 h-5 text-slate-400 group-hover:text-[#2D2D2D] transition-colors" />
+              </button>
+            )}
             {user ? (
               user.isAnonymous ? (
                 <button 
@@ -279,6 +288,12 @@ export default function App() {
                 </button>
               </div>
               <Battle2v2 />
+            </motion.div>
+          )}
+
+          {mode === 'admin' && (
+            <motion.div key="admin" className="flex-1 flex flex-col">
+              <AdminPanel onBack={() => setMode('menu')} />
             </motion.div>
           )}
 

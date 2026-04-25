@@ -8,6 +8,9 @@ export interface Challenge {
   difficulty?: 'easy' | 'medium' | 'hard';
   totalAttempts?: number;
   totalSuccesses?: number;
+  clue1?: string;
+  clue2?: string;
+  clue3?: string;
 }
 
 export interface ResponseLog {
